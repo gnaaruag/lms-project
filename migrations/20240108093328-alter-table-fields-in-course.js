@@ -10,17 +10,14 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
 
-    await queryInterface.addColumn('Courses', 'tags', {
-      type: Sequelize.DataTypes.ARRAY(Sequelize.DataTypes.STRING)
-    })
 
-    await queryInterface.changeColumn('Courses', 'rating', {
+
+    await queryInterface.addColumn('Courses', 'rating', {
       type: Sequelize.DataTypes.DECIMAL
     })
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.removeColumn('Courses', 'tags')
     await queryInterface.removeColumn('Courses', 'rating')
     /**
      * Add reverting commands here.

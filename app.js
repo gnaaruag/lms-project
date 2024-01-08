@@ -18,6 +18,9 @@ app.use(flash())
 
 // const salt = 10
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(bodyparser.urlencoded({ extended: false }))
 app.use(bodyparser.json())
 app.set('view engine', 'ejs')
@@ -108,7 +111,9 @@ app.get('/', (request, response) => {
 })
 
 const authenticationModule = require('./routes/authentication.routes')
+const educatorModule = require('./routes/educator.route')
+
 
 app.use('/', authenticationModule)
-
+app.use('/', educatorModule)
 module.exports = app
