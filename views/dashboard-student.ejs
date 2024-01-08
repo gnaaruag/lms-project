@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Learning Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://db.onlinewebfonts.com/c/5c5a257758cff0acee4d28ff555f3bc5?family=Helvetica" rel="stylesheet">
+
+</head>
+
+<body class="font-sans bg-gray-100">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-500 text-white text-center py-4">
+        <div class="flex justify-between items-center container mx-auto">
+            <div class="text-left list-none">
+                <li class="text-2xl font-semibold px-4"><a href="/" style="font-family: serif; letter-spacing: 2px;" class="hover:underline">lms</a></li>
+            </div>
+            <div>
+                <a class="bg-red-500 text-white px-4 py-2 mr-2 rounded-md hover:bg-red-600" href="/signout">Sign out</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Welcome Message -->
+    <div class="welcome mt-2 p-1 mx-auto">
+        <div class="bg-gray-200 p-6 rounded-md flex justify-between">
+            <p class="sm:text-xl font-semibold">Hello <%= responseBody.username %>! what are you learning today?</p>
+            <p class="sm:text-xl font-semibold"><%= new Date().toISOString().slice(0,10) %></p>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

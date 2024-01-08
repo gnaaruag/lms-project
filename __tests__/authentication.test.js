@@ -81,6 +81,25 @@ describe("Authentication module test suite", function () {
     expect(user.accessLevel).toBe("student");
   });
 
+  test("test creation of account with email that already exists", async () => {
+    let res = await agent.get("/signup-educator");
+    res = await agent.post("/onboard").send({
+      firstName: "Test",
+      lastName: "User",
+      email: "user@faculty.edu",
+      password: "test-password",
+      accessLevel: "student",
+    });
+    expect(res.statusCode).toBe(302);
+
+    const user = await User.findAll({
+      where: { email: "user@faculty.edu" },
+    });
+    console.log(user);
+
+    expect(user.length).toBe(1);
+  });
+
   test("test login endpoint when correct credentials are provided", async () => {
     let res = await agent.get("/login");
     res = await agent.post("/session-create").send({
@@ -92,7 +111,7 @@ describe("Authentication module test suite", function () {
     expect(res.headers.location).toBe("/dashboard");
   });
 
-  test("test login endpoint when incorrect credentials are provided", async () => {
+  test("test login endpoint when account does not exist", async () => {
     let res = await agent.get("/login");
     res = await agent.post("/session-create").send({
       email: "thisuserdoesnotexist@gmail.com",
@@ -103,12 +122,26 @@ describe("Authentication module test suite", function () {
     expect(res.headers.location).toBe("/login");
   });
 
+  test("test login endpoint when incorrect password provided", async () => {
+    let res = await agent.get("/login");
+    res = await agent.post("/session-create").send({
+      email: "user@faculty.edu",
+      password: "wrong pwd",
+    });
+
+    expect(res.statusCode).toBe(302);
+    expect(res.headers.location).toBe("/login");
+  });
   test("test /signout endpoint", async () => {
-    const res = await agent.get("/signout");
+    let res = await agent.get("/signout");
     expect(res.statusCode).toBe(302);
 
     /*
             note: add check by trying to access protected route when a protected route is defined
         */
+    res = await agent.get("/dashboard");
+    expect(res.statusCode).toBe(302)
+    expect(res.headers.location).toBe("/login");
+
   });
 });
