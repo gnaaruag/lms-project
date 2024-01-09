@@ -14,18 +14,20 @@ module.exports = (sequelize, DataTypes) => {
       Course.belongsTo(models.User, {
         foreignKey: 'userId'
       })
+
+      Course.hasMany(models.Chapter, {
+        foreignKey: 'courseId'
+      })
     }
   }
   Course.init({
     courseName: DataTypes.STRING,
-    courseInstructor: DataTypes.STRING,
-    startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE,
+    startDate: DataTypes.DATEONLY,
+    endDate: DataTypes.DATEONLY,
+    enrollmentDeadline: DataTypes.DATEONLY,
     description: DataTypes.TEXT,
-    price: DataTypes.DECIMAL,
     prerequisites: DataTypes.ARRAY(DataTypes.STRING),
-    rating: DataTypes.FLOAT,
-    enrollmentDeadline: DataTypes.DATE
+    tags: DataTypes.ARRAY(DataTypes.STRING)
   }, {
     sequelize,
     modelName: 'Course',

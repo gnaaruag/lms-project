@@ -46,6 +46,21 @@
             <a class="bg-blue-400 text-white px-4 py-2 mr-2 rounded-md hover:bg-blue-500" href="/analytics-dashboard">Analytics></a>
         </div>
     </div>
+
+    <br>
+
+    <p class="p-5 sm:text-xl font-semibold">Your Courses</p>
+
+    <div class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <% for (var course of returnCourses) { %>
+            <div class="bg-gray-200 p-6 rounded-md flex flex-col items-center gap-2">
+                <p class="text-xl font-semibold"><%= course.courseName %></p>
+                <p class="text-gray-700">Start Date: <%= course.startDate %></p>
+                <p class="text-gray-700">End Date: <%= course.endDate %></p>
+                <!-- Add more course details as needed -->
+            </div>
+        <% } %>
+    </div>
     
 
 

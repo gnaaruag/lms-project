@@ -135,10 +135,7 @@ describe("Authentication module test suite", function () {
   test("test /signout endpoint", async () => {
     let res = await agent.get("/signout");
     expect(res.statusCode).toBe(302);
-
-    /*
-            note: add check by trying to access protected route when a protected route is defined
-        */
+    // check by accessing protected route
     res = await agent.get("/dashboard");
     expect(res.statusCode).toBe(302)
     expect(res.headers.location).toBe("/login");

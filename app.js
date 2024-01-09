@@ -18,8 +18,8 @@ app.use(flash())
 
 // const salt = 10
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.use(bodyparser.urlencoded({ extended: false }))
 app.use(bodyparser.json())

@@ -10,32 +10,25 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       courseName: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      courseInstructor: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       startDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       endDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
+      },
+      enrollmentDeadline: {
+        type: Sequelize.DATEONLY
       },
       description: {
         type: Sequelize.TEXT
       },
-      price: {
-        type: Sequelize.DECIMAL
-      },
       prerequisites: {
         type: Sequelize.ARRAY(Sequelize.STRING)
       },
-      rating: {
-        type: Sequelize.FLOAT
-      },
-      enrollmentDeadline: {
-        type: Sequelize.DATE
+      tags: {
+        type: Sequelize.ARRAY(Sequelize.STRING)
       },
       createdAt: {
         allowNull: false,

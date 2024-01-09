@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Course } = require('../models')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 
@@ -81,7 +81,18 @@ const requestDashboard = async (request, response) => {
 	}
 
 	if (request.user.accessLevel === 'educator') {
-		response.render('dashboard-educator', { responseBody })
+		try {
+			const returnCourses = await Course.findAll({
+				where: {userId: request.user.id}
+			})
+			console.log(returnCourses)
+			
+			response.render('dashboard-educator', { responseBody, returnCourses })
+
+		} catch (err) {
+			request.flash('error','There was some error in fetching your courses')
+			console.log(err)
+		}
 	}
 	else {
 		response.render('dashboard-student', { responseBody })
