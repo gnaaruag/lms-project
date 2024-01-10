@@ -7,8 +7,11 @@ const requestCourseCreation = (request, response) => {
 }
 
 const requestChapterCreation = (request, response) => {
-	response.render('create-course')
-} 
+	const sendId = {
+		id: request.params.id,
+	}
+	response.render('create-chapter', { sendId })
+}
 
 const createCourse = async (request, response) => {
 	// eslint-disable-next-line no-unused-vars
@@ -28,7 +31,7 @@ const createCourse = async (request, response) => {
 				tags: request.body.tags.split(',').map(tag => tag.trim())
 			}
 		)
-	
+
 		response.redirect(`/course-confirmation/${course.id}`)
 	}
 	catch (err) {
@@ -42,20 +45,18 @@ const createChapter = (request, response) => {
 		// eslint-disable-next-line no-unused-vars
 		const chapter = Chapter.create(
 			{
-				chapterNo: request.body.chapterNo,
-				title: request.body.title,
-				courseId: request.bodycourseId
+				chapterNo: request.body.chapterNumber,
+				title: request.body.chapterName,
+				courseId: request.body.courseId
 			}
 		)
-		response.redirect('/chapter-confirmation')
+		response.redirect(`/chapter-confirmation/${request.body.courseId}`)
 	}
 	catch (err) {
 		request.flash('error', 'chapter could not be created')
 		console.log(err)
 	}
-} 
-
-
+}
 
 const serveCourseConfirmation = (request, response) => {
 	const sendId = {
@@ -65,7 +66,22 @@ const serveCourseConfirmation = (request, response) => {
 }
 
 const serveChapterConfirmation = (request, response) => {
-	response.render('chapter-confirmation')
-} 
+	const sendId = {
+		id: request.params.id,
+	}
+	response.render('chapter-confirmation', { sendId })
+}
 
-module.exports = { requestCourseCreation, createCourse, serveCourseConfirmation, requestChapterCreation, createChapter, serveChapterConfirmation }
+const viewCourse = async (request, response) => {
+	try {
+		const chapterList = await Chapter.findAll({ where: { courseId: request.params.id } })
+		const courseInfo = await Course.findOne({ where: { id: request.params.id } })
+		response.render('course-overview', { chapterList, courseInfo })
+
+	}
+	catch (err) {
+		console.log(err)
+	}
+}
+
+module.exports = { requestCourseCreation, createCourse, serveCourseConfirmation, requestChapterCreation, createChapter, serveChapterConfirmation, viewCourse }

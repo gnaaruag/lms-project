@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter Created - Learning Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="font-sans bg-gray-100">
+
+    <div class="container mx-auto mt-8 p-4 bg-white rounded-md shadow-md text-center">
+        <h2 class="text-3xl font-bold mb-6">Chapter Created Successfully!</h2>
+        
+        <!-- Add Content to Chapter Button -->
+        <a href="/add-chapter/<%= sendId.id %>" class="bg-blue-500 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-600 mb-4 inline-block">Add Content to Chapter</a>
+        
+        <!-- Return to Dashboard Button -->
+        <a href="/dashboard" class="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 mb-4 inline-block">Return to Dashboard</a>
+    </div>
+
+</body>
+
+</html>

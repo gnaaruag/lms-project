@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+		<%= courseInfo.courseName %> - Learning Management System
+	</title>
+	<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="font-sans bg-gray-100">
+
+	<div class="container mx-auto mt-8 p-4 bg-white rounded-md shadow-md">
+		<div class="flex justify-center">
+			<a class="bg-indigo-500 text-white px-4 py-2 mr-2 rounded-md hover:bg-indigo-600" href="/dashboard">Go Back</a>
+					<h2 class="text-3xl font-bold mb-6 text-center">
+						<%= courseInfo.courseName %> - Course Overview
+					</h2>
+		</div>
+
+		<!-- Display Chapters -->
+		<table class="w-full">
+			<thead>
+				<tr>
+					<th class="py-2 px-4 bg-gray-200">Chapter No</th>
+					<th class="py-2 px-4 bg-gray-200">Chapter Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% for (var chapter of chapterList) { %>
+					<tr>
+						<td class="py-2 px-4 border">
+							<%= chapter.chapterNo %>
+						</td>
+						<td class="py-2 px-4 border">
+							<%= chapter.title %>
+						</td>
+					</tr>
+					<% } %>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+
+</html>
