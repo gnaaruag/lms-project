@@ -1,4 +1,5 @@
-const { Course, Chapter } = require('../models')
+// eslint-disable-next-line no-unused-vars
+const { Course, Chapter, Module, Page } = require('../models')
 
 
 
@@ -57,6 +58,10 @@ const createChapter = (request, response) => {
 		console.log(err)
 	}
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> revert
 
 const serveCourseConfirmation = (request, response) => {
 	const sendId = {
