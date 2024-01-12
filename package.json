@@ -8,7 +8,7 @@
     "test": "set NODE_ENV=test&&  jest --detectOpenHandles",
     "prepare": "husky install",
     "start": "node index.js",
-    "dev": "set NODE_ENV=development&& nodemon -e js,ejs,html,css"
+    "dev": "set NODE_ENV=development&& nodemon -e js,"
   },
   "keywords": [],
   "author": "gnaaruag <gaurang40304@gmail.com>",

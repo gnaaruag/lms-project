@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Module - Learning Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="font-sans bg-gray-100">
+
+    <div class="container mx-auto mt-8 p-4 bg-white rounded-md shadow-md">
+        <h2 class="text-3xl font-bold mb-6 text-center">Create New Module</h2>
+        <form action="/add-module" method="POST">
+            <!-- Module Number -->
+            <div class="mb-4">
+                <label for="moduleNumber" class="block text-gray-700 font-semibold mb-2">Module Number</label>
+                <input type="number" id="moduleNumber" name="moduleNumber" class="w-full p-2 border rounded-md"
+                    required>
+            </div>
+
+            <!-- Module Title -->
+            <div class="mb-4">
+                <label for="moduleTitle" class="block text-gray-700 font-semibold mb-2">Module Title</label>
+                <input type="text" id="moduleTitle" name="moduleTitle" class="w-full p-2 border rounded-md" required>
+            </div>
+
+            <!-- Hidden Chapter ID -->
+            <input type="hidden" id="chapterId" name="chapterId" value="<%= sendId.id %>">
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit"
+                    class="bg-blue-500 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-600">Create Module</button>
+            </div>
+        </form>
+    </div>
+
+</body>
+
+</html>

@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-const { Course, Chapter, Module, Page } = require('../models')
+const { Course, Chapter, Module } = require('../models')
 
 
 
@@ -12,6 +11,13 @@ const requestChapterCreation = (request, response) => {
 		id: request.params.id,
 	}
 	response.render('create-chapter', { sendId })
+}
+
+const requestModuleCreation = (request, response) => {
+	const sendId = {
+		id: request.params.id,
+	}
+	response.render('create-module', { sendId })
 }
 
 const createCourse = async (request, response) => {
@@ -58,10 +64,23 @@ const createChapter = (request, response) => {
 		console.log(err)
 	}
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> revert
+const createModule = (request, response) => {
+	try {
+		// eslint-disable-next-line no-unused-vars
+		const module = Module.create({
+			moduleNo: request.body.moduleNumber,
+			title: request.body.moduleTitle,
+			chapterId: request.body.chapterId
+		})
+		response.redirect(`/module-confirmation/${request.body.chapterId}`)
+	}
+
+	catch (err) {
+		request.flash('error', 'module could not be created')
+		console.log(err)
+	}
+}
 
 const serveCourseConfirmation = (request, response) => {
 	const sendId = {
@@ -77,6 +96,13 @@ const serveChapterConfirmation = (request, response) => {
 	response.render('chapter-confirmation', { sendId })
 }
 
+const serveModuleConfirmation = (request, response) => {
+	const sendId = {
+		id: request.params.id,
+	}
+	response.render('module-confirmation', { sendId })
+}
+
 const viewCourse = async (request, response) => {
 	try {
 		const chapterList = await Chapter.findAll({ where: { courseId: request.params.id } })
@@ -89,4 +115,15 @@ const viewCourse = async (request, response) => {
 	}
 }
 
-module.exports = { requestCourseCreation, createCourse, serveCourseConfirmation, requestChapterCreation, createChapter, serveChapterConfirmation, viewCourse }
+module.exports = {
+	requestCourseCreation,
+	createCourse,
+	serveCourseConfirmation,
+	requestChapterCreation,
+	createChapter,
+	serveChapterConfirmation,
+	viewCourse,
+	requestModuleCreation,
+	createModule,
+	serveModuleConfirmation
+}
