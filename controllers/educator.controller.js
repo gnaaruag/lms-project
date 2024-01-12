@@ -1,4 +1,4 @@
-const { Course, Chapter, Module } = require('../models')
+const { Course, Chapter, Module, Page } = require('../models')
 
 
 
@@ -18,6 +18,13 @@ const requestModuleCreation = (request, response) => {
 		id: request.params.id,
 	}
 	response.render('create-module', { sendId })
+}
+
+const requestPageCreation = (request, response) => {
+	const sendId = {
+		id: request.params.id,
+	}
+	response.render('create-page', {sendId})
 }
 
 const createCourse = async (request, response) => {
@@ -82,6 +89,24 @@ const createModule = (request, response) => {
 	}
 }
 
+const createPage = (request, response) => {
+	try {
+		// eslint-disable-next-line no-unused-vars
+		const page = Page.create({
+			pageNo: request.body.pageNo,
+			title: request.body.pageTitle,
+			content: request.body.pageContent,
+			moduleId: request.body.moduleId,
+		})
+		
+		response.redirect(`/page-confirmation/${request.body.moduleId}`)
+	}
+	catch (err) {
+		request.flash('error', 'could not create a page')
+		console.log(err)
+	}
+}
+
 const serveCourseConfirmation = (request, response) => {
 	const sendId = {
 		id: request.params.id,
@@ -101,6 +126,14 @@ const serveModuleConfirmation = (request, response) => {
 		id: request.params.id,
 	}
 	response.render('module-confirmation', { sendId })
+}
+
+
+const servePageConfirmation = (request, response) => {
+	const sendId = {
+		id: request.params.id,
+	}
+	response.render('page-confirmation', { sendId })
 }
 
 const viewCourse = async (request, response) => {
@@ -125,5 +158,8 @@ module.exports = {
 	viewCourse,
 	requestModuleCreation,
 	createModule,
-	serveModuleConfirmation
+	serveModuleConfirmation,
+	requestPageCreation,
+	createPage,
+	servePageConfirmation
 }
