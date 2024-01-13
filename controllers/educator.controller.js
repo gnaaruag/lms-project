@@ -13,18 +13,36 @@ const requestChapterCreation = (request, response) => {
 	response.render('create-chapter', { sendId })
 }
 
-const requestModuleCreation = (request, response) => {
+const requestModuleCreation = async (request, response) => {
 	const sendId = {
 		id: request.params.id,
 	}
-	response.render('create-module', { sendId })
+
+	try {
+		const modules = await Module.findAll({
+			where: { chapterId: request.params.id }
+		})
+		response.render('create-module', { sendId, modules })
+	}
+	catch (err) {
+		request.flash('error', 'there was some problem in retrieving modules')
+		console.log(err)
+	}
+
 }
 
-const requestPageCreation = (request, response) => {
+const requestPageCreation = async (request, response) => {
 	const sendId = {
 		id: request.params.id,
 	}
-	response.render('create-page', {sendId})
+
+	try {
+		const pages = await Page.findAll( { where: {moduleId: request.params.id } } )
+		response.render('create-page', {sendId, pages})
+	}
+	catch (err) {
+		request.flash('error','there was a problem in fetching all pages')
+	}
 }
 
 const createCourse = async (request, response) => {
@@ -129,11 +147,16 @@ const serveModuleConfirmation = (request, response) => {
 }
 
 
-const servePageConfirmation = (request, response) => {
+const servePageConfirmation = async (request, response) => {
 	const sendId = {
-		id: request.params.id,
+		moduleId: request.params.id,
 	}
-	response.render('page-confirmation', { sendId })
+
+	const module = await Module.findOne( { where: { id: request.params.id } } )
+	const chapter = await Chapter.findOne( { where: { id : module.chapterId } } )
+
+
+	response.render('page-confirmation', { sendId, chapter })
 }
 
 const viewCourse = async (request, response) => {
@@ -145,6 +168,16 @@ const viewCourse = async (request, response) => {
 	}
 	catch (err) {
 		console.log(err)
+	}
+}
+
+const viewPage = async (request, response) => {
+	try {
+		const page = await Page.findOne({ where: { id: request.params.id } })
+		response.render('view-page', { page })
+	}
+	catch (err) {
+		request.flash('error','couldnt fetch page')
 	}
 }
 
@@ -161,5 +194,6 @@ module.exports = {
 	serveModuleConfirmation,
 	requestPageCreation,
 	createPage,
-	servePageConfirmation
+	servePageConfirmation,
+	viewPage
 }

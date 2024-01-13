@@ -17,7 +17,8 @@ const { requestCourseCreation,
 	serveModuleConfirmation, 
 	requestPageCreation,
 	createPage,
-	servePageConfirmation} = require('../controllers/educator.controller')
+	servePageConfirmation,
+	viewPage} = require('../controllers/educator.controller')
 
 const allMiddlewareChecks = [connectEnsureLogin.ensureLoggedIn(), customMiddlewareCheck.checkEducator]
 
@@ -34,6 +35,7 @@ route.get('/module-confirmation/:id', allMiddlewareChecks, serveModuleConfirmati
 route.get('/add-page/:id', allMiddlewareChecks, requestPageCreation)
 route.post('/add-page', allMiddlewareChecks, createPage)
 route.get('/page-confirmation/:id', allMiddlewareChecks, servePageConfirmation)
+route.get('/view-page/:id',allMiddlewareChecks, viewPage)
 
 
 module.exports = route
