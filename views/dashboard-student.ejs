@@ -7,7 +7,6 @@
     <title>Dashboard - Learning Management System</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://db.onlinewebfonts.com/c/5c5a257758cff0acee4d28ff555f3bc5?family=Helvetica" rel="stylesheet">
-
 </head>
 
 <body class="font-sans bg-gray-100">
@@ -27,11 +26,22 @@
     <!-- Welcome Message -->
     <div class="welcome mt-2 p-1 mx-auto">
         <div class="bg-gray-200 p-6 rounded-md flex justify-between">
-            <p class="sm:text-xl font-semibold">Hello <%= responseBody.username %>! what are you learning today?</p>
+            <p class="sm:text-xl font-semibold">Hello <%= responseBody.username %>! What are you learning today?</p>
             <p class="sm:text-xl font-semibold"><%= new Date().toISOString().slice(0,10) %></p>
         </div>
     </div>
 
+    <!-- Your Courses Section -->
+    <div class="container mx-auto mt-8">
+        <h2 class="text-2xl font-semibold mb-4">Your Courses</h2>
+        <!-- Add your logic to display enrolled courses here -->
+    </div>
+
+    <!-- Explore Courses Section -->
+    <div class="container mx-auto mt-8">
+        <h2 class="text-2xl font-semibold mb-4">Explore Courses</h2>
+        <a href="/explore-courses" class="bg-blue-500 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-600">Explore</a>
+    </div>
 
 </body>
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Courses - Learning Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .truncate-overflow {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+        }
+    </style>
+</head>
+
+<body class="font-sans bg-gray-100">
+
+    <!-- Navigation Bar -->
+    <!-- Add your navigation bar if needed -->
+<nav class="bg-blue-500 text-white text-center py-2">
+        <ul class="flex justify-center space-x-4 items-center">
+            <li class="text-2xl font-semibold px-4"><a href="/" style="font-family: serif; letter-spacing: 2px;" class="hover:underline">lms</a></li>
+        </ul>
+    </nav>
+
+    <div class="container mx-auto mt-8 p-4">
+
+        <h2 class="text-3xl font-bold mb-6 text-center">Explore Courses</h2>
+
+        <!-- Course Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <% courses.forEach(course => { %>
+                <div class="bg-white p-4 rounded-md shadow-md flex flex-col items-center">
+                    <h2 class="text-xl font-bold mb-2 text-center"><%= course.courseName %></h2>
+                    <p class="text-gray-700 mb-4 truncate-overflow flex-grow text-center">
+                        <%= course.description.split(' ').slice(0, 20).join(' ') + (course.description.split(' ').length > 20 ? '...' : '') %>
+                    </p>
+                    <p class="text-gray-700">Start Date: <%= course.startDate %></p>
+                    <p class="text-gray-700">End Date: <%= course.endDate %></p>
+                    <p class="text-gray-700">Enrollment Deadline: <%= course.enrollmentDeadline %></p>
+                    <% if (new Date(course.enrollmentDeadline) > new Date()) { %>
+                        <a href="/course-preview/<%= course.id %>"
+                            class="bg-blue-500 text-white px-4 py-2 rounded-full font-bold hover:bg-blue-600 
+                                   <% if (new Date(course.enrollmentDeadline) <= new Date()) { %> opacity-50 cursor-not-allowed <% } %>">
+                            <% if (new Date(course.enrollmentDeadline) <= new Date()) { %> Enrollment Closed <% } else { %> Enroll Now <% } %>
+                        </a>
+                    <% } else { %>
+                        <a href="#" class="bg-gray-500 text-white px-4 py-2 rounded-full font-bold cursor-not-allowed">
+                            Enrollment Closed
+                        </a>
+                    <% } %>
+                </div>
+            <% }) %>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

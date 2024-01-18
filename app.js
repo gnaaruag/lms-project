@@ -112,8 +112,10 @@ app.get('/', (request, response) => {
 
 const authenticationModule = require('./routes/authentication.routes')
 const educatorModule = require('./routes/educator.route')
-
+const studentModule = require('./routes/student.routes')
 
 app.use('/', authenticationModule)
 app.use('/', educatorModule)
+app.use('/', studentModule)
+
 module.exports = app
