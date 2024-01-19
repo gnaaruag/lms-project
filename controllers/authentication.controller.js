@@ -1,4 +1,4 @@
-const { User, Course } = require('../models')
+const { User, Course, Enrollment } = require('../models')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 
@@ -23,8 +23,8 @@ const onboardUser = async (request, response) => {
 		request.flash('error', 'Invalid input. Please provide valid data.')
 		return response.redirect(accessLevel === 'educator' ? '/signup-educator' : '/signup-student')
 	}
-	
-	
+
+
 	const existingUser = await User.findOne({ where: { email } })
 	if (existingUser) {
 		request.flash('error', 'Email already exists. Choose a different email address.')
@@ -56,10 +56,9 @@ const onboardUser = async (request, response) => {
 const createSession = (request, response, next) => {
 	passport.authenticate('local', {
 		failureRedirect: '/login',
-		failureFlash: true,
+		failureFlash: 'Invalid Username or Password',
 	})(request, response, () => {
 		// This function is called upon successful authentication
-		request.flash('error', 'Username or password incorrect')
 		response.redirect('/dashboard')
 	})
 }
@@ -83,19 +82,44 @@ const requestDashboard = async (request, response) => {
 	if (request.user.accessLevel === 'educator') {
 		try {
 			const returnCourses = await Course.findAll({
-				where: {userId: request.user.id}
+				where: { userId: request.user.id }
 			})
 			console.log(returnCourses)
-			
+
 			response.render('dashboard-educator', { responseBody, returnCourses })
 
 		} catch (err) {
-			request.flash('error','There was some error in fetching your courses')
+			request.flash('error', 'There was some error in fetching your courses')
 			console.log(err)
 		}
 	}
 	else {
-		response.render('dashboard-student', { responseBody })
+		try {
+			const enrolledCourses = await Enrollment.findAll({
+				where: {
+					userId: request.user.id,
+				},
+			})
+
+			const userCourses = await Promise.all(
+				enrolledCourses.map(async (element) => {
+					const course = await Course.findOne({ where: { id: element.courseId } })
+					const instructor = await User.findOne({ where: {id: course.userId}})
+					return {instructor: instructor.firstName + ' ' + instructor.lastName,
+						courseName: course.courseName,
+						startDate: course.startDate,
+						endDate: course.endDate,
+					}	
+				})
+			)
+
+			response.render('dashboard-student', { responseBody, userCourses })
+		} catch (err) {
+			console.error('Error retrieving courses:', err)
+			request.flash('error', 'There was some error in retrieving your courses')
+			response.redirect('/dashboard')
+		}
+
 	}
 }
 

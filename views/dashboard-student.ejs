@@ -31,10 +31,31 @@
         </div>
     </div>
 
+        <%- include('flash-messages.ejs') %>
     <!-- Your Courses Section -->
     <div class="container mx-auto mt-8">
         <h2 class="text-2xl font-semibold mb-4">Your Courses</h2>
-        <!-- Add your logic to display enrolled courses here -->
+        <div class="container mx-auto mt-8">
+        
+            <% if (userCourses) { %>
+                <!-- Display enrolled courses -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <% userCourses.forEach(course => { %>
+                        <div class="bg-white p-4 rounded-md shadow-md flex flex-col items-center gap-1">
+                            <h2 class="text-xl font-bold mb-2 text-center"><%= course.courseName %></h2>
+                            <p class="text-gray-700">Start Date: <%= course.startDate %></p>
+                            <p class="text-gray-700">End Date: <%= course.endDate %></p>   
+                            <p class="text-gray-700">Instructor: <%= course.instructor %></p>
+                            <a href="#" class="bg-blue-500 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-600">Go to Course</a>
+                            <!-- You can add a link to view more details or navigate to the course -->
+                        </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <!-- Display message if user has no enrolled courses -->
+                <p class="text-gray-700">You are not enrolled in any courses yet.</p>
+            <% } %>
+        </div>
     </div>
 
     <!-- Explore Courses Section -->

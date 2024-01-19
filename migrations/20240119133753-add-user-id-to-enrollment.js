@@ -1,8 +1,9 @@
+
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add altering commands here.
      *
@@ -10,11 +11,6 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
     await queryInterface.addColumn("Enrollments", "userId", {
-      type: Sequelize.DataTypes.INTEGER,
-    });
-
-    
-    await queryInterface.addColumn("Enrollments", "courseId", {
       type: Sequelize.DataTypes.INTEGER,
     });
 
@@ -26,26 +22,17 @@ module.exports = {
         field: "id",
       },
     });
-    
 
-    await queryInterface.addConstraint("Enrollments", {
-      fields: ["courseId"],
-      type: "foreign key",
-      references: {
-        table: "Courses",
-        field: "id",
-      },
-    });
-  
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add reverting commands here.
      *
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.removeColumn("Pages", "moduleId");
+    await queryInterface.removeColumn("Enrollments", "userId");
+
   }
 };
