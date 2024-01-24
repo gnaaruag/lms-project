@@ -106,6 +106,7 @@ const requestDashboard = async (request, response) => {
 					const course = await Course.findOne({ where: { id: element.courseId } })
 					const instructor = await User.findOne({ where: {id: course.userId}})
 					return {instructor: instructor.firstName + ' ' + instructor.lastName,
+						id: course.id,
 						courseName: course.courseName,
 						startDate: course.startDate,
 						endDate: course.endDate,
