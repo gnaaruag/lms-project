@@ -110,6 +110,8 @@ app.get('/', (request, response) => {
 	response.render('landing-page')
 })
 
+
+
 const authenticationModule = require('./routes/authentication.routes')
 const educatorModule = require('./routes/educator.route')
 const studentModule = require('./routes/student.routes')
@@ -117,5 +119,9 @@ const studentModule = require('./routes/student.routes')
 app.use('/', authenticationModule)
 app.use('/', educatorModule)
 app.use('/', studentModule)
+
+app.get('*', (request, response) => {
+	response.render('404')
+})
 
 module.exports = app

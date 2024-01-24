@@ -37,7 +37,7 @@ const enrollStudentToCourse = async (request, response) => {
 		const isAlreadyEnrolled = await Enrollment.findOne({
 			where: {
 				courseId: request.params.id,
-				userId: request.instructor.id
+				userId: request.user.id
 			}
 		})
 
@@ -46,7 +46,7 @@ const enrollStudentToCourse = async (request, response) => {
 
 			const enroll = await Enrollment.create({
 				isEnrolled: true,
-				userId: request.instructor.id,
+				userId: request.user.id,
 				courseId: request.params.id,
 			})
 			response.redirect('/dashboard')
@@ -102,10 +102,22 @@ const chapterOverview = async (request, response) => {
 	}
 }
 
+const pageView = async (request, response) => {
+	try {
+		const page = await Page.findOne({ where: {id: request.params.id} })
+		response.render('student-page-view', { page })
+	}
+	catch (err) {
+		request.flash('error', 'Could not fetch Page')
+		console.log(err)
+	}
+}
+
 module.exports = {
 	requestExplore,
 	studentCourseOverview,
 	enrollStudentToCourse,
 	courseEntryPoint,
 	chapterOverview,
+	pageView,
 }
