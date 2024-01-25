@@ -13,6 +13,32 @@
             display: -webkit-box;
             -webkit-box-orient: vertical;
         }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 5px;
+            height: 20px;
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: <%= completionPercentage %>%;
+            background-color: #4caf50;
+            border-radius: 5px;
+            position: absolute;
+        }
+
+        .percentage-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -40,6 +66,14 @@
             <p class="text-gray-700">End Date: <%= course.endDate %></p>
         </div>
 
+        <div class="mx-auto max-w-md mt-2 mb-4 p-4 bg-white rounded-md shadow-md">
+            <h3 class="text-xl font-semibold mb-2">Completion Percentage</h3>
+            <div class="progress-bar">
+                <div class="progress-bar-fill"></div>
+                <div class="percentage-text"><%= completionPercentage.toFixed(2) %>%</div>
+            </div>
+        </div>
+
         <!-- Chapter List Section -->
         <div class="mx-auto max-w-3xl p-4 bg-white rounded-md shadow-md">
             <h3 class="text-xl font-semibold mb-2">Chapter List</h3>
@@ -51,12 +85,15 @@
                             <%= chapter.title %>
                         </span>
                         <a href="/chapter-overview/<%= chapter.id %>" class="text-blue-500">
-                            Go to Chapter>
+                            Go to Chapter
                         </a>
                     </li>
                 <% }) %>
             </ul>
         </div>
+
+        <!-- Completion Percentage Section -->
+        
 
     </div>
 

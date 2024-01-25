@@ -73,8 +73,33 @@ const courseEntryPoint = async (request, response) => {
 		const course = await Course.findOne({ where: { id: request.params.id } })
 		const instructor = await User.findOne({ where: { id: course.userId } })
 		const chapters = await Chapter.findAll({ where: { courseId: course.id } })
-		console.log('peepee', course)
-		response.render('student-course-entry-point', { course, chapters, instructor })
+
+		let totalPages = 0
+		let completedPages = 0
+
+		for (const chapter of chapters) {
+			const modules = await Module.findAll({
+				where: { chapterId: chapter.id },
+				include: [{ model: Page }]
+			})
+
+			for (const module of modules) {
+				for (const page of module.Pages) {
+					totalPages++
+					const pageStatus = await status.findOne({
+						where: { pageId: page.id, userId: request.user.id }
+					})
+
+					if (pageStatus && pageStatus.completed) {
+						completedPages++
+					}
+				}
+			}
+		}
+
+		const completionPercentage = (completedPages / totalPages) * 100
+
+		response.render('student-course-entry-point', { course, chapters, instructor, completionPercentage })
 	}
 	catch (err) {
 		request.flash('error', 'Could not fetch course')
@@ -85,23 +110,40 @@ const courseEntryPoint = async (request, response) => {
 const chapterOverview = async (request, response) => {
 	try {
 		const chapter = await Chapter.findOne({ where: { id: request.params.id } })
+		let completedPages = 0
+		let totalPages = 0
+
 		const modulesWithPages = await Module.findAll({
 			where: { chapterId: request.params.id },
 			include: [
 				{
-					model: Page,
+					model: Page
 				},
 			],
 		})
 
+		for (const mod of modulesWithPages) {
+			for (const page of mod.Pages) {
+				const pageStatus = await status.findOne({ where: { pageId: page.id, userId: request.user.id } })
+				if (pageStatus && pageStatus.completed) {
+					completedPages++
+					totalPages++
+					page.Status = true
+				} else {
+					totalPages++
+					page.Status = false
+				}
+			}
+		}
+
 		console.log(modulesWithPages)
 		response.render('student-chapter-overview', { chapter, modulesWithPages })
-	}
-	catch (err) {
+	} catch (err) {
 		request.flash('error', 'Could not fetch course content')
 		console.log(err)
 	}
 }
+
 
 const pageView = async (request, response) => {
 	try {
@@ -117,7 +159,7 @@ const pageView = async (request, response) => {
 			course,
 			currStatus
 		})
-	} 
+	}
 	catch (err) {
 		request.flash('error', 'Could not fetch Page')
 		console.log(err)
@@ -130,7 +172,7 @@ const updateStatus = async (request, response) => {
 
 		const currentStatus = await status.findOne({ where: { pageId: request.params.id, userId: request.user.id } })
 
-		if (!currentStatus){
+		if (!currentStatus) {
 
 			const newStatus = await status.create({
 				completed: true,

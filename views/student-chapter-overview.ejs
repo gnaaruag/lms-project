@@ -28,7 +28,10 @@
                     <ul>
                         <% module.Pages.forEach(page => { %>
                             <li class="text-blue-500">
-                            	<a href="/page/<%= page.id %>"><%= page.title %></a>
+                                <a href="/page/<%= page.id %>"><%= page.title %></a>
+                                <% if (page.Status && page.Status) { %>
+                                    <span class="text-green-500">Completed</span>
+                                <% } %>
                             </li>
                         <% }) %>
                     </ul>
