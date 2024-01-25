@@ -19,9 +19,6 @@ const studentCourseOverview = async (request, response) => {
 		const course = await Course.findOne({ where: { id: request.params.id } })
 		const instructor = await User.findOne({ where: { id: course.userId } })
 		const chapters = await Chapter.findAll({ where: { courseId: course.id } })
-
-		console.log('peepee'.course)
-		console.log(instructor)
 		response.render('student-course-overview', { course, instructor, chapters })
 	}
 
@@ -41,8 +38,6 @@ const enrollStudentToCourse = async (request, response) => {
 				userId: request.user.id
 			}
 		})
-
-		console.log('enrollleddd', isAlreadyEnrolled)
 		if (!isAlreadyEnrolled) {
 
 			const enroll = await Enrollment.create({
@@ -136,7 +131,6 @@ const chapterOverview = async (request, response) => {
 			}
 		}
 
-		console.log(modulesWithPages)
 		response.render('student-chapter-overview', { chapter, modulesWithPages })
 	} catch (err) {
 		request.flash('error', 'Could not fetch course content')

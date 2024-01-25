@@ -13,23 +13,23 @@
     <div class="container mx-auto mt-8 p-4 bg-white rounded-md shadow-md">
         <h2 class="text-3xl font-bold mb-6 text-center">Create New Chapter</h2>
         <form action="/add-chapter" method="POST">
-            <!-- Chapter Number -->
+
             <div class="mb-4">
                 <label for="chapterNumber" class="block text-gray-700 font-semibold mb-2">Chapter Number</label>
                 <input type="number" id="chapterNumber" name="chapterNumber" class="w-full p-2 border rounded-md"
                     required>
             </div>
 
-            <!-- Chapter Name -->
+
             <div class="mb-4">
                 <label for="chapterName" class="block text-gray-700 font-semibold mb-2">Chapter Name</label>
                 <input type="text" id="chapterName" name="chapterName" class="w-full p-2 border rounded-md" required>
             </div>
 
-            <!-- Hidden Course ID -->
+
             <input type="hidden" id="courseId" name="courseId" value="<%= sendId.id %>">
 
-            <!-- Submit Button -->
+
             <div class="text-center">
                 <button type="submit"
                     class="bg-blue-500 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-600">Create Chapter</button>

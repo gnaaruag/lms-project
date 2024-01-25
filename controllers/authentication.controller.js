@@ -58,7 +58,7 @@ const createSession = (request, response, next) => {
 		failureRedirect: '/login',
 		failureFlash: 'Invalid Username or Password',
 	})(request, response, () => {
-		// This function is called upon successful authentication
+		// only afte succesful login
 		response.redirect('/dashboard')
 	})
 }
@@ -84,8 +84,6 @@ const requestDashboard = async (request, response) => {
 			const returnCourses = await Course.findAll({
 				where: { userId: request.user.id }
 			})
-			console.log(returnCourses)
-
 			response.render('dashboard-educator', { responseBody, returnCourses })
 
 		} catch (err) {

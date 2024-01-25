@@ -12,7 +12,6 @@
 
 <body class="font-sans bg-gray-100">
 
-    <!-- Navigation Bar -->
     <nav class="bg-blue-500 text-white text-center py-4">
         <div class="flex justify-between items-center container mx-auto">
             <div class="text-left list-none">
@@ -24,7 +23,6 @@
         </div>
     </nav>
 
-    <!-- Welcome Message -->
     <div class="welcome mt-2 p-1 mx-auto">
         <div class="bg-gray-200 p-6 rounded-md flex justify-between">
             <p class="sm:text-xl font-semibold">Hello <%= responseBody.username %>! what are you teaching today?</p>
@@ -54,7 +52,6 @@
                 <p class="text-gray-700">Start Date: <%= course.startDate %></p>
                 <p class="text-gray-700">End Date: <%= course.endDate %></p>
                 <a href="/view-course/<%= course.id %>" class="bg-green-400 text-white px-4 py-2 mr-2 rounded-md hover:bg-green-500">Course Actions></a>
-                <!-- Add more course details as needed -->
             </div>
         <% } %>
     </div>

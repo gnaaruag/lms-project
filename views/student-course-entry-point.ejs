@@ -44,22 +44,15 @@
 
 <body class="font-sans bg-gray-100">
 
-    <!-- Navigation Bar -->
-    <!-- Add your navigation bar if needed -->
-
     <div class="container mx-auto mt-8 p-4">
 
-        <!-- Course Details -->
         <div class="text-center mb-8">
             <h2 class="text-3xl font-bold mb-2"><%= course.courseName %></h2>
             <p class="text-gray-700 text-sm mb-4">Instructor: <%= instructor.firstName %> <%= instructor.lastName %></p>
         </div>
 
-        <!-- Course Status Section -->
         <div class="mb-8 mx-auto max-w-md p-4 bg-white rounded-md shadow-md">
             <h3 class="text-xl font-semibold mb-2">Course Status</h3>
-            <!-- Add your course status information here -->
-            <!-- For example: -->
             <p class="text-gray-700">Status: In Progress</p>
             <p class="text-gray-700">Enrollment Deadline: <%= course.enrollmentDeadline %></p>
             <p class="text-gray-700">Start Date: <%= course.startDate %></p>
@@ -74,11 +67,9 @@
             </div>
         </div>
 
-        <!-- Chapter List Section -->
         <div class="mx-auto max-w-3xl p-4 bg-white rounded-md shadow-md">
             <h3 class="text-xl font-semibold mb-2">Chapter List</h3>
             <ul>
-                <!-- Loop through chapters and display links -->
                 <% chapters.forEach(chapter => { %>
                     <li class="mb-2 flex justify-between items-center">
                         <span class="truncate-overflow">
@@ -92,7 +83,6 @@
             </ul>
         </div>
 
-        <!-- Completion Percentage Section -->
         
 
     </div>

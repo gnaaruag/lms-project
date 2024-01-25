@@ -55,8 +55,6 @@ describe("Authentication module test suite", function () {
     const user = await User.findOne({
       where: { email: "user.test@test.com" },
     });
-    console.log(user);
-
     expect(user).toBeTruthy();
     expect(user.accessLevel).toBe("educator");
   });
@@ -95,8 +93,6 @@ describe("Authentication module test suite", function () {
     const user = await User.findAll({
       where: { email: "user@faculty.edu" },
     });
-    console.log(user);
-
     expect(user.length).toBe(1);
   });
 
