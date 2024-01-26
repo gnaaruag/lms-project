@@ -9,6 +9,11 @@ const session = require('express-session')
 const LocalStrategy = require('passport-local')
 const bcrypt = require('bcrypt')
 const flash = require('connect-flash')
+const favicon = require('serve-favicon')
+
+// eslint-disable-next-line no-undef
+app.use(favicon(path.join(__dirname, 'public', 'images/favicon.ico')))
+
 
 const { User } = require('./models')
 

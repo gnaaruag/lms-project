@@ -18,6 +18,7 @@ const { requestCourseCreation,
 	requestPageCreation,
 	createPage,
 	servePageConfirmation,
+	viewAnalytics,
 	viewPage} = require('../controllers/educator.controller')
 
 const allMiddlewareChecks = [connectEnsureLogin.ensureLoggedIn(), customMiddlewareCheck.checkEducator]
@@ -36,6 +37,7 @@ route.get('/add-page/:id', allMiddlewareChecks, requestPageCreation)
 route.post('/add-page', allMiddlewareChecks, createPage)
 route.get('/page-confirmation/:id', allMiddlewareChecks, servePageConfirmation)
 route.get('/view-page/:id',allMiddlewareChecks, viewPage)
+route.get('/analytics-dashboard', allMiddlewareChecks, viewAnalytics)
 
 
 module.exports = route

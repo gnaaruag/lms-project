@@ -7,6 +7,11 @@ const Sequelize = require('sequelize')
 const requestExplore = async (request, response) => {
 	try {
 		const courses = await Course.findAll()
+
+		for (const enroll of courses) {
+			const currCount = await Enrollment.count({where: {courseId: enroll.id}})
+			enroll.registrations = currCount
+		}
 		response.render('explore-courses', { courses })
 	}
 	catch (err) {
@@ -186,9 +191,6 @@ const updateStatus = async (request, response) => {
 	}
 }
 
-const updateProfile = async (request, response) => {
-
-}
 
 module.exports = {
 	requestExplore,
@@ -198,5 +200,4 @@ module.exports = {
 	chapterOverview,
 	pageView,
 	updateStatus,
-	updateProfile
 }

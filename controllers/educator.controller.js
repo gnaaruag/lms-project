@@ -1,4 +1,4 @@
-const { Course, Chapter, Module, Page } = require('../models')
+const { Course, Chapter, Module, Page, Enrollment } = require('../models')
 
 
 
@@ -181,6 +181,22 @@ const viewPage = async (request, response) => {
 	}
 }
 
+const viewAnalytics = async (request, response) => {
+	try {
+		const courses = await Course.findAll({ where: { userId: request.user.id }})
+		for (const enroll of courses) {
+			const currCount = await Enrollment.count({where: {courseId: enroll.id}})
+			enroll.registrations = currCount
+		}
+
+		response.render('educator-analytics', { courses })
+	}
+	catch (err) {
+		request.flash('error','couldnt fetch analytics')
+		console.log(err)
+	}
+}
+
 module.exports = {
 	requestCourseCreation,
 	createCourse,
@@ -195,5 +211,6 @@ module.exports = {
 	requestPageCreation,
 	createPage,
 	servePageConfirmation,
-	viewPage
+	viewPage,
+	viewAnalytics
 }

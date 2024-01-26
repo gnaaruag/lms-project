@@ -9,12 +9,16 @@
 </head>
 
 <body class="font-sans bg-gray-100">
-
+    <%- include('flash-messages.ejs') %>
     <div class="container mx-auto mt-8 p-4 bg-white rounded-md shadow-md">
         <h2 class="text-3xl font-bold mb-6 text-center"><%= page.title %></h2>
 
         <div class="prose max-w-full">
-            <%= page.content %>
+            <% page.content.split('\n').forEach(line => { %>
+                <%= line %><br>
+              <% }) %>
+              
+              
         </div>
 
     </div>

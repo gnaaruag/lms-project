@@ -7,24 +7,23 @@
     <title>Dashboard - Learning Management System</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://db.onlinewebfonts.com/c/5c5a257758cff0acee4d28ff555f3bc5?family=Helvetica" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body class="font-sans bg-gray-100">
 
-    <!-- Navigation Bar -->
-    <nav class="bg-blue-500 text-white text-center py-4">
+    <nav class="bg-black text-white text-center py-4">
         <div class="flex justify-between items-center container mx-auto">
             <div class="text-left list-none">
                 <li class="text-2xl font-semibold px-4"><a href="/" style="font-family: serif; letter-spacing: 2px;" class="hover:underline">lms</a></li>
             </div>
             <div>
-                <a class="bg-green-500 text-white px-4 py-2 mr-2 rounded-md hover:bg-green-600" href="/profile">Profile</a>
-                <a class="bg-red-500 text-white px-4 py-2 mr-2 rounded-md hover:bg-red-600" href="/signout">Sign out</a>
+                <a class="text-white px-4 py-2 mr-2 rounded-md hover:bg-gray-900" href="/profile"><i class="fa-regular fa-user" style="color: #ffffff;"></i></a>
+                <a class="text-white px-4 py-2 mr-2 rounded-md hover:bg-gray-900" href="/signout"><i class="fa-solid fa-arrow-right-from-bracket" style="color: #ffffff;"></i></a>
             </div>
         </div>
     </nav>
 
-    <!-- Welcome Message -->
     <div class="welcome mt-2 p-1 mx-auto">
         <div class="bg-gray-200 p-6 rounded-md flex justify-between">
             <p class="sm:text-xl font-semibold">Hello <%= responseBody.username %>! What are you learning today?</p>
@@ -33,7 +32,6 @@
     </div>
 
         <%- include('flash-messages.ejs') %>
-    <!-- Your Courses Section -->
     <div class="container mx-auto mt-8">
         <h2 class="text-2xl font-semibold mb-4">Your Courses</h2>
         <div class="container mx-auto mt-8">
@@ -47,7 +45,7 @@
                             <p class="text-gray-700">Start Date: <%= course.startDate %></p>
                             <p class="text-gray-700">End Date: <%= course.endDate %></p>   
                             <p class="text-gray-700">Instructor: <%= course.instructor %></p>
-                            <a href="/course-outline/<%= course.id %>" class="bg-blue-500 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-600">Go to Course</a>
+                            <a href="/course-outline/<%= course.id %>" class="bg-black text-white mt-4  px-6 py-3 font-bold hover:bg-gray-900">Go to Course</a>
 
                         </div>
                     <% }) %>
@@ -61,7 +59,8 @@
 
     <div class="container mx-auto mt-8">
         <h2 class="text-2xl font-semibold mb-4">Explore Courses</h2>
-        <a href="/explore-courses" class="bg-blue-500 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-600">Explore</a>
+        <p>Want to check out all the courses we have to offer?</p>
+        <a href="/explore-courses" class="bg-black flex justify-center text-white mt-4  px-6 py-3 font-bold hover:bg-gray-900">Explore</a>
     </div>
 
 </body>
