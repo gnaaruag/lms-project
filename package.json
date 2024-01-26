@@ -8,7 +8,9 @@
     "test": "set NODE_ENV=test&&  jest --detectOpenHandles",
     "prepare": "husky install",
     "start": "node index.js",
-    "dev": "set NODE_ENV=development&& nodemon -e js,"
+    "dev": "set NODE_ENV=development&& nodemon -e js,",
+    "build": "npm install && npx sequelize-cli db:create && npx sequelize-cli db:migrate"
+
   },
   "keywords": [],
   "author": "gnaaruag <gaurang40304@gmail.com>",
