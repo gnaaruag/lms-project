@@ -9,7 +9,7 @@
     "prepare": "husky install",
     "start": "node index.js",
     "dev": "set NODE_ENV=development&& nodemon -e js,",
-    "build": "npm install && npx sequelize-cli db:create && npx sequelize-cli db:migrate"
+    "build": "set NODE_ENV=production&& npm install && npx sequelize-cli db:create && npx sequelize-cli db:migrate"
 
   },
   "keywords": [],
