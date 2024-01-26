@@ -3,3 +3,9 @@
         <li style="text-align: center; list-style: none; color: red;"> <%= messages.error[i] %></li>
     <% } %>
     <% } %>
+
+    <% if(messages && messages.success && messages.success.length > 0)  { %>
+        <% for(var i=0; i<messages.success.length; i++) { %>
+            <li style="text-align: center; list-style: none; color: green;"> <%= messages.success[i] %></li>
+        <% } %>
+        <% } %>

@@ -102,13 +102,14 @@ const requestDashboard = async (request, response) => {
 			const userCourses = await Promise.all(
 				enrolledCourses.map(async (element) => {
 					const course = await Course.findOne({ where: { id: element.courseId } })
-					const instructor = await User.findOne({ where: {id: course.userId}})
-					return {instructor: instructor.firstName + ' ' + instructor.lastName,
+					const instructor = await User.findOne({ where: { id: course.userId } })
+					return {
+						instructor: instructor.firstName + ' ' + instructor.lastName,
 						id: course.id,
 						courseName: course.courseName,
 						startDate: course.startDate,
 						endDate: course.endDate,
-					}	
+					}
 				})
 			)
 
@@ -122,6 +123,48 @@ const requestDashboard = async (request, response) => {
 	}
 }
 
+const getProfile = async (request, response) => {
+	try {
+		const user = await User.findOne({ where: { id: request.user.id } })
+		response.render('profile', { user })
+	}
+	catch (err) {
+		request.flash('error', 'Could not fetch Profile')
+		console.log(err)
+		response.redirect('/dasboard')
+	}
+}
+
+const updatePassword = async (request, response) => {
+	try {
+		const { currentPassword, newPassword, confirmPassword } = request.body
+		const user = await User.findOne({ where: { id: request.user.id } })
+
+		const isPasswordValid = await bcrypt.compare(currentPassword, user.password)
+
+		if (!isPasswordValid) {
+			request.flash('error', 'Current password is incorrect.')
+			return response.redirect('/profile')
+		}
+
+		if (newPassword !== confirmPassword) {
+			request.flash('error', 'New password and confirm password do not match.')
+			return response.redirect('/profile')
+		}
+
+		const hashedPassword = await bcrypt.hash(newPassword, salt)
+
+		await User.update({ password: hashedPassword }, { where: { id: request.user.id } })
+
+		request.flash('success', 'Password updated successfully.')
+		response.redirect('/dashboard')
+	} catch (err) {
+		console.error(err)
+		request.flash('error', 'Error updating password.')
+		response.redirect('/profile')
+	}
+}
+
 module.exports = {
 	requestStudentSignup,
 	requestEducatorSignup,
@@ -130,4 +173,6 @@ module.exports = {
 	createSession,
 	destroySession,
 	requestDashboard,
+	getProfile,
+	updatePassword
 }

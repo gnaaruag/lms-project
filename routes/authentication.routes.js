@@ -13,6 +13,8 @@ const {
 	createSession,
 	destroySession,
 	requestDashboard,
+	getProfile,
+	updatePassword
 } = require('../controllers/authentication.controller')
 
 route.get('/login', requestLogin)
@@ -22,5 +24,8 @@ route.post('/onboard', onboardUser)
 route.post('/session-create', createSession)
 route.get('/signout', destroySession)
 route.get('/dashboard', connectEnsureLogin.ensureLoggedIn(), requestDashboard)
+route.get('/profile', connectEnsureLogin.ensureLoggedIn(), getProfile)
+route.post('/update-password', connectEnsureLogin.ensureLoggedIn(), updatePassword)
+
 
 module.exports = route

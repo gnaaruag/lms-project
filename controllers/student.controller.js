@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
+const { response } = require('express')
 const { User, Course, Chapter, Enrollment, Module, Page, status } = require('../models')
 const Sequelize = require('sequelize')
 
@@ -185,6 +186,10 @@ const updateStatus = async (request, response) => {
 	}
 }
 
+const updateProfile = async (request, response) => {
+
+}
+
 module.exports = {
 	requestExplore,
 	studentCourseOverview,
@@ -192,5 +197,6 @@ module.exports = {
 	courseEntryPoint,
 	chapterOverview,
 	pageView,
-	updateStatus
+	updateStatus,
+	updateProfile
 }
