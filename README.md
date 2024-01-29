@@ -15,7 +15,7 @@ To get started with this project
 1. Clone the repository:
 
 ```
-git clone https://github.com/your-username/your-project.git
+https://github.com/gnaaruag/lms-project.git
 ```
 
 2. Navigate to the project directory:
