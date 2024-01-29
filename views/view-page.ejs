@@ -4,24 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= page.title %> - Learning Management System</title>
+    <title>
+        <%= page.title %> - Learning Management System
+    </title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/turndown@7.0.0/dist/turndown.umd.min.js"></script>
+    <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
+
 </head>
 
 <body class="font-sans bg-gray-100">
     <%- include('flash-messages.ejs') %>
-    <div class="container mx-auto mt-8 p-4 bg-white rounded-md shadow-md">
-        <h2 class="text-3xl font-bold mb-6 text-center"><%= page.title %></h2>
+        <div class="container mx-auto mt-8 p-4 bg-white rounded-md shadow-md">
+            <h2 class="text-3xl font-bold mb-6 text-center">
+                <%= page.title %>
+            </h2>
+            <div class="prose max-w-full" id="cont">
+                <%= page.content %>
 
-        <div class="prose max-w-full">
-            <% page.content.split('\n').forEach(line => { %>
-                <%= line %><br>
-              <% }) %>
-              
-              
+
+            </div>
+
         </div>
 
-    </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const content = `<%= page.content %>`;
+                console.log('peepee',content)
+                debugger;
+                const turndownService = new Turndown();
+                const md = turndownService.turndown(content);
+                document.getElementById('cont').innerHTML = md;
+            });
+        </script>
 
 </body>
 

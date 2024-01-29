@@ -6,6 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page <%= page.pageNo %> - <%= page.title %> - Page View</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        h1 {
+            font-size: 2em;
+        }
+
+        h2 {
+            font-size: 1.5em;
+        }
+
+        h3 {
+            font-size: 1em;
+        }
+
+        ul {
+            list-style-type: disc;
+        }
+
+        ol {
+            list-style-type:decimal;
+        }
+
+        a {
+            color: #64ccc5;
+            text-decoration: underline;
+        }
+
+        pre {
+            background-color: #d2d1ce;
+            padding: 1em;
+        }
+
+        
+    </style>
 </head>
 
 <body class="font-sans bg-gray-100">
@@ -15,10 +48,8 @@
 
         <div class="mb-8">
             <h2 class="text-3xl font-bold mb-2">Page <%= page.pageNo %> - <%= page.title %></h2>
-            <div class="text-gray-700">
-                <% page.content.split('\n').forEach(line => { %>
-                    <%= line %><br>
-                  <% }) %>
+            <div class="text-gray-700" id="cont">
+                <%- page.content %>
                   
             </div>
         </div>
@@ -41,6 +72,16 @@
             </button>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+                const content = `<%= page.content %>`;
+                console.log('peepee',content)
+                const turndownService = new Turndown();
+                const md = turndownService.turndown(content);
+                document.getElementById('cont').innerHTML = md;
+            });
+    </script>
 
 </body>
 

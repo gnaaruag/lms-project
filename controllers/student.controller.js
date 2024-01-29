@@ -3,6 +3,8 @@
 const { response } = require('express')
 const { User, Course, Chapter, Enrollment, Module, Page, status } = require('../models')
 const Sequelize = require('sequelize')
+const marked = require('marked')
+
 
 const requestExplore = async (request, response) => {
 	try {
@@ -149,6 +151,7 @@ const pageView = async (request, response) => {
 	try {
 
 		const page = await Page.findOne({ where: { id: request.params.id } })
+		page.content = marked.parse(page.content)
 		const mod = await Module.findOne({ where: { id: page.moduleId } })
 		const chapter = await Chapter.findOne({ where: { id: mod.chapterId } })
 		const course = await Course.findOne({ where: { id: chapter.courseId } })

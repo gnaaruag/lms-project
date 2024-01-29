@@ -10,6 +10,8 @@ const LocalStrategy = require('passport-local')
 const bcrypt = require('bcrypt')
 const flash = require('connect-flash')
 const favicon = require('serve-favicon')
+// eslint-disable-next-line no-unused-vars
+const marked = require('marked')
 
 // eslint-disable-next-line no-undef
 app.use(favicon(path.join(__dirname, 'public', 'images/favicon.ico')))
