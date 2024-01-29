@@ -37,12 +37,35 @@
             padding: 1em;
         }
 
+        blockquote {
+            border-left: 0.75em solid #cccccc ;
+            background-color: #d4d4d45c;
+            padding: 1em;
+
+        }
+
         
     </style>
 </head>
 
 <body class="font-sans bg-gray-100">
     <%- include('flash-messages.ejs') %>
+
+    <div class="flex justify-center gap-2 mt-2">
+        <button class="bg-black text-blue-100 px-4 py-2 font-bold hover:bg-gray-900">
+            <a href="/chapter-overview/<%= chapter.id %>" class="flex items-center gap-2 text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+              </svg>
+              Back to chapter</a>
+        </button>
+    
+        <button class="bg-black text-blue-100 px-4 py-2 font-bold hover:bg-gray-900">
+            <a href="/course-outline/<%= course.id %>" class="flex items-center gap-2 text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
+              </svg>
+               Back to Course</a>
+        </button>
+    </div>
 
     <div class="container mx-auto mt-8 p-4">
 
@@ -54,12 +77,14 @@
             </div>
         </div>
 
-        <div class="flex justify-between items-center">
-            <button class="bg-black text-blue-100 px-4 py-2 font-bold hover:bg-gray-900">
-                <a href="/chapter-overview/<%= chapter.id %>">Go back to chapter</a>
-            </button>
+        <div class="flex justify-center items-center">
+            
 
-            <button class="bg-black text-green-100 px-4 py-2  font-bold hover:bg-gray-900">
+            <button class="bg-black text-green-100 px-4 py-2  font-bold hover:bg-gray-900 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                  </svg>
+                  
                 <% if (!currStatus) { %>
                     <a href="/status/<%= page.id %>">Mark As Complete</a>
                 <% } else { %>
@@ -67,9 +92,7 @@
                 <% } %>
             </button>
 
-            <button class="bg-black text-blue-100 px-4 py-2 font-bold hover:bg-gray-900">
-                <a href="/course-outline/<%= course.id %>">Go back to Course</a>
-            </button>
+            
         </div>
     </div>
 

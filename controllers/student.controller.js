@@ -8,7 +8,7 @@ const marked = require('marked')
 
 const requestExplore = async (request, response) => {
 	try {
-		const courses = await Course.findAll()
+		const courses = await Course.findAll({order: [['id', 'DESC']]})
 
 		for (const enroll of courses) {
 			const currCount = await Enrollment.count({where: {courseId: enroll.id}})

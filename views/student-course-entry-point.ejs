@@ -17,7 +17,6 @@
         .progress-bar {
             width: 100%;
             background-color: #ddd;
-            border-radius: 5px;
             height: 20px;
             position: relative;
             margin-top: 10px;
@@ -27,7 +26,6 @@
             height: 100%;
             width: <%= completionPercentage %>%;
             background-color: #4caf50;
-            border-radius: 5px;
             position: absolute;
         }
 
@@ -37,30 +35,36 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: #fff;
-            font-weight: bold;
+            font-weight:bold;
         }
+
+        
     </style>
 </head>
 
 <body class="font-sans bg-gray-100">
     <%- include('flash-messages.ejs') %>
+    <div class="flex justify-center gap-2 mt-2">
+        <button class="bg-black text-blue-100 px-4 py-2 font-bold hover:bg-gray-900">
+            <a href="/dashboard" class="flex items-center gap-2 text-white"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+              </svg>
+              Back to Course</a>
+        </button>
+    </div>
     <div class="container mx-auto mt-8 p-4">
 
         <div class="text-center mb-8">
-            <h2 class="text-3xl font-bold mb-2"><%= course.courseName %></h2>
-            <p class="text-gray-700 text-sm mb-4">Instructor: <%= instructor.firstName %> <%= instructor.lastName %></p>
+            <h2 class="text-4xl font-bold mb-2"><%= course.courseName %></h2>
+            <p class="text-gray-700 text-lg mb-4">Instructor: <%= instructor.firstName %> <%= instructor.lastName %></p>
         </div>
 
         <div class="mb-8 mx-auto max-w-md p-4 bg-white rounded-md shadow-md">
             <h3 class="text-xl font-semibold mb-2">Course Status</h3>
-            <p class="text-gray-700">Status: In Progress</p>
-            <p class="text-gray-700">Enrollment Deadline: <%= course.enrollmentDeadline %></p>
+            <p class="text-gray-700">Status: <%= (completionPercentage.toFixed(2) < 100.00) ? "In Progress" : "Completed" %> </p>
             <p class="text-gray-700">Start Date: <%= course.startDate %></p>
             <p class="text-gray-700">End Date: <%= course.endDate %></p>
-        </div>
-
-        <div class="mx-auto max-w-md mt-2 mb-4 p-4 bg-white rounded-md shadow-md">
-            <h3 class="text-xl font-semibold mb-2">Completion Percentage</h3>
+            <p class="font-semibold mb-2">Completion Percentage</p>
             <div class="progress-bar">
                 <div class="progress-bar-fill"></div>
                 <div class="percentage-text"><%= completionPercentage.toFixed(2) %>%</div>
