@@ -2,6 +2,14 @@
 
 This is the first iteration of the Learning Management System project made as a submission for the capstone project for Pupilfirst's WD201 course
 
+Students can register for courses, and learn and complete courses.
+Educators can create a course and have students enrol in them
+
+Each Course has Chapters
+Each Chapter can have multiple Modules(smaller Sections in a Chapter)
+Each Module has pages which can be read by the user and marked as complete
+Each page can have content in it and along with it have code blocks, blockquotes, images, links etc.
+
 - [Installation](#installation)
 - [Features](#features)
 - [User Flow Diagram](#userflow)
