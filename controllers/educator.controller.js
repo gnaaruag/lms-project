@@ -13,9 +13,9 @@ const requestChapterCreation = async (request, response) => {
 	}
 
 	try {
-
 		const chapters = await Chapter.findAll({ where: { courseId: request.params.id } })
 		const chapter = await Chapter.findOne({ where: { courseId: request.params.id } })
+		console.log(chapter)
 		response.render('create-chapter', { sendId, chapters, chapter })
 	}
 	catch (err) {
