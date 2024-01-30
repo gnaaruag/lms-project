@@ -7,7 +7,9 @@
     <title>Dashboard - Learning Management System</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://db.onlinewebfonts.com/c/5c5a257758cff0acee4d28ff555f3bc5?family=Helvetica" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body class="font-sans bg-gray-100">
@@ -15,11 +17,14 @@
     <nav class="bg-black text-white text-center py-4">
         <div class="flex justify-between items-center container mx-auto">
             <div class="text-left list-none">
-                <li class="text-2xl font-semibold px-4"><a href="/" style="font-family: serif; letter-spacing: 2px;" class="hover:underline">lms</a></li>
+                <li class="text-2xl font-semibold px-4"><a href="/" style="font-family: serif; letter-spacing: 2px;"
+                        class="hover:underline">lms</a></li>
             </div>
             <div>
-                <a class="text-white px-4 py-2 mr-2 rounded-md hover:bg-gray-900" href="/profile"><i class="fa-regular fa-user" style="color: #ffffff;"></i> Profile</a>
-                <a class="text-white px-4 py-2 mr-2 rounded-md hover:bg-gray-900" href="/signout"><i class="fa-solid fa-arrow-right-from-bracket" style="color: #ffffff;"></i> Sign Out</a>
+                <a class="text-white px-4 py-2 mr-2 rounded-md hover:bg-gray-900" href="/profile"><i
+                        class="fa-regular fa-user" style="color: #ffffff;"></i> Profile</a>
+                <a class="text-white px-4 py-2 mr-2 rounded-md hover:bg-gray-900" href="/signout"><i
+                        class="fa-solid fa-arrow-right-from-bracket" style="color: #ffffff;"></i> Sign Out</a>
             </div>
         </div>
     </nav>
@@ -27,56 +32,90 @@
     <div class="welcome mt-2 p-1 mx-auto">
         <div class="bg-gray-200 p-6 rounded-md flex justify-between">
             <p class="sm:text-xl font-semibold">Hello <%= responseBody.username %>! What are you learning today?</p>
-            <p class="sm:text-xl font-semibold"><%= new Date().toISOString().slice(0,10) %></p>
+            <p class="sm:text-xl font-semibold">
+                <%= new Date().toISOString().slice(0,10) %>
+            </p>
         </div>
     </div>
 
-        <%- include('flash-messages.ejs') %>
-    <div class="container mx-auto mt-8">
-
-        <div class="flex justify-center items-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
-              </svg>
-              
-            <h2 class="text-2xl font-semibold ">Your Courses</h2>
-    
-        </div>
+    <%- include('flash-messages.ejs') %>
         <div class="container mx-auto mt-8">
-        
-            <% if (userCourses) { %>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <% userCourses.forEach(course => { %>
-                        <div class="bg-white p-4 rounded-md shadow-md flex flex-col items-center gap-1">
-                            <h2 class="text-xl font-bold mb-2 text-center"><%= course.courseName %></h2>
+            <div class="flex justify-center items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-8 h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+                </svg>
+
+                <h2 class="text-2xl font-semibold ">Your Courses</h2>
+
+            </div>
+            <div class="container mx-auto mt-8">
+
+                <% if (userCourses) { %>
+
+                    <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
+                        <% userCourses.forEach(course=> { %>
+                            <div class="bg-white p-4 rounded-md shadow-md flex justify-between gap-1 items-center">
+
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="ml-2 px-2 py-2 w-12 h-12 bg-gray-300 rounded-full">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+                                </svg>
+                                <div class="flex flex-col items-center ">
+                                    <h2 class="text-xl font-bold mb-2 text-center">
+                                        <%= course.courseName %>
+                                    </h2>
+                                    <p class="text-gray-700 text-sm">End Date: <%= course.endDate %>
+                                    </p>
+                                    <p class="text-gray-700 text-sm">Instructor: <%= course.instructor %>
+                                    </p>
+
+                                </div>
+                                <a href="/course-outline/<%= course.id %>"
+                                    class="  px-1 py-1 font-bold flex justify-center rounded-md items-center gap-2 hover:bg-gray-300">Go to Course<svg
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    </svg>
+                                </a>
+
+
+
+                                <!-- <h2 class="text-xl font-bold mb-2 text-center"><%= course.courseName %></h2>
                             <p class="text-gray-700">Start Date: <%= course.startDate %></p>
                             <p class="text-gray-700">End Date: <%= course.endDate %></p>   
                             <p class="text-gray-700">Instructor: <%= course.instructor %></p>
-                            <a href="/course-outline/<%= course.id %>" class="bg-black text-white mt-4  px-6 py-3 font-bold hover:bg-gray-900">Go to Course</a>
+                            <a href="/course-outline/<%= course.id %>" class="bg-black text-white mt-4  px-6 py-3 font-bold hover:bg-gray-900">Go to Course</a> -->
 
-                        </div>
-                    <% }) %>
-                </div>
-            <% } else { %>
+                            </div>
+                            <% }) %>
+                    </div>
+                    <% } else { %>
 
-                <p class="text-gray-700">You are not enrolled in any courses yet.</p>
-            <% } %>
+                        <p class="text-gray-700">You are not enrolled in any courses yet.</p>
+                        <% } %>
+            </div>
         </div>
-    </div>
 
-    <div class="container mx-auto mt-8">
+        <div class="container mx-auto mt-8">
 
-        <div class="flex justify-center items-center gap-3 mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-              </svg>          
-            <h2 class="text-2xl font-semibold">Explore Courses</h2>
-    
+            <div class="flex justify-center items-center gap-3 mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-8 h-8">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+                <h2 class="text-2xl font-semibold">Explore Courses</h2>
+
+            </div>
+            <p>Want to check out all the courses we have to offer?</p>
+            <a href="/explore-courses"
+                class="bg-black flex justify-center text-white mt-4  px-10 py-3 font-bold hover:bg-gray-900">Explore</a>
         </div>
-        <p>Want to check out all the courses we have to offer?</p>
-        <a href="/explore-courses" class="bg-black flex justify-center text-white mt-4  px-10 py-3 font-bold hover:bg-gray-900">Explore</a>
-    </div>
 
 </body>
 

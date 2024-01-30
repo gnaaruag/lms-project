@@ -1,17 +1,21 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 const { response } = require('express')
 const { User, Course, Chapter, Enrollment, Module, Page, status } = require('../models')
 const Sequelize = require('sequelize')
 const marked = require('marked')
+const fs = require('fs')
+const moment = require('moment')
+const Pdf = require('pdfkit')
 
 
 const requestExplore = async (request, response) => {
 	try {
-		const courses = await Course.findAll({order: [['id', 'DESC']]})
+		const courses = await Course.findAll({ order: [['id', 'DESC']] })
 
 		for (const enroll of courses) {
-			const currCount = await Enrollment.count({where: {courseId: enroll.id}})
+			const currCount = await Enrollment.count({ where: { courseId: enroll.id } })
 			enroll.registrations = currCount
 		}
 		response.render('explore-courses', { courses })
@@ -194,6 +198,61 @@ const updateStatus = async (request, response) => {
 	}
 }
 
+const certGen = async (request, response) => {
+	try {
+		const imagePath = __dirname + '/certificate.png'
+		const parisienne = __dirname + '/fonts/Parisienne-Regular.ttf'
+		const ovo = __dirname + '/fonts/Ovo-Regular.ttf'
+		const poppins = __dirname + '/fonts/Poppins-Regular.ttf'
+
+		const doc = new Pdf({
+			layout: 'landscape',
+			size: 'A4'
+		})
+
+		const course = await Course.findOne({ where: { id: request.params.id } })
+		const user = await User.findOne({ where: { id: request.user.id } })
+		const instr = await User.findOne({ where: { id: course.userId } })
+		const name = user.firstName + ' ' + user.lastName
+		const inst = instr.firstName + ' ' + instr.lastName
+		const text1 = 'Presented for completion of course'
+		const text2 = course.name
+
+		console.log(user,instr)
+		// Create PDF
+		doc.pipe(fs.createWriteStream(`${name}.pdf`))
+		doc.image(imagePath, 0, 0, { width: 800 })
+
+		// Font settings
+		doc.font(parisienne).fontSize(60).text(name, 20, 255, { align: 'center' })
+		doc.font(poppins).fontSize(15).text(text1, 60, 330, { align: 'center' })
+		doc.font(poppins).fontSize(15).text(text2, 60, 350, { align: 'center' })
+		doc.font(ovo).fontSize(24).text(inst, 365, 430, { align: 'center' })
+
+		// End PDF creation
+		doc.end(() => {
+			console.log('PDF generated successfully!')
+
+			// Set response headers
+			response.setHeader('Content-disposition', 'attachment filename=' + `${name}.pdf`)
+			response.setHeader('Content-type', 'application/pdf')
+
+			// Pipe the filestream to the response
+			const filestream = fs.createReadStream(`${name}.pdf`)
+			filestream.pipe(response)
+
+			// Ensure response is properly closed
+			response.end()
+		})
+	} catch (err) {
+		console.error('Error during PDF generation:', err)
+		response.status(500).send('Internal Server Error')
+	}
+}
+
+
+
+
 
 module.exports = {
 	requestExplore,
@@ -203,4 +262,5 @@ module.exports = {
 	chapterOverview,
 	pageView,
 	updateStatus,
+	certGen
 }

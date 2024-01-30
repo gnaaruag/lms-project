@@ -15,6 +15,9 @@ const marked = require('marked')
 
 // eslint-disable-next-line no-undef
 app.use(favicon(path.join(__dirname, 'public', 'images/favicon.ico')))
+// eslint-disable-next-line no-undef
+app.use(express.static(path.join(__dirname, 'public')))
+
 
 
 const { User } = require('./models')
