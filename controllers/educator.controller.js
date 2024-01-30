@@ -6,11 +6,21 @@ const requestCourseCreation = (request, response) => {
 	response.render('create-course')
 }
 
-const requestChapterCreation = (request, response) => {
+const requestChapterCreation = async (request, response) => {
 	const sendId = {
 		id: request.params.id,
 	}
-	response.render('create-chapter', { sendId })
+
+	try {
+
+		const chapters = await Chapter.findAll({ where: { courseId: request.params.id } })
+		const chapter = await Chapter.findOne({ where: { courseId: request.params.id } })
+		response.render('create-chapter', { sendId, chapters, chapter  })
+	}
+	catch (err) {
+		request.flash('error', 'there was some problem in retrieving chapters')
+		console.log(err)
+	}
 }
 
 const requestModuleCreation = async (request, response) => {
@@ -22,7 +32,11 @@ const requestModuleCreation = async (request, response) => {
 		const modules = await Module.findAll({
 			where: { chapterId: request.params.id }
 		})
-		response.render('create-module', { sendId, modules })
+
+		const module =  await Module.findOne({
+			where: { chapterId: request.params.id }
+		})
+		response.render('create-module', { sendId, modules, module })
 	}
 	catch (err) {
 		request.flash('error', 'there was some problem in retrieving modules')
@@ -37,11 +51,11 @@ const requestPageCreation = async (request, response) => {
 	}
 
 	try {
-		const pages = await Page.findAll( { where: {moduleId: request.params.id } } )
-		response.render('create-page', {sendId, pages})
+		const pages = await Page.findAll({ where: { moduleId: request.params.id } })
+		response.render('create-page', { sendId, pages })
 	}
 	catch (err) {
-		request.flash('error','there was a problem in fetching all pages')
+		request.flash('error', 'there was a problem in fetching all pages')
 	}
 }
 
@@ -116,7 +130,7 @@ const createPage = (request, response) => {
 			content: request.body.pageContent,
 			moduleId: request.body.moduleId,
 		})
-		
+
 		response.redirect(`/page-confirmation/${request.body.moduleId}`)
 	}
 	catch (err) {
@@ -152,8 +166,8 @@ const servePageConfirmation = async (request, response) => {
 		moduleId: request.params.id,
 	}
 
-	const module = await Module.findOne( { where: { id: request.params.id } } )
-	const chapter = await Chapter.findOne( { where: { id : module.chapterId } } )
+	const module = await Module.findOne({ where: { id: request.params.id } })
+	const chapter = await Chapter.findOne({ where: { id: module.chapterId } })
 
 
 	response.render('page-confirmation', { sendId, chapter })
@@ -177,22 +191,22 @@ const viewPage = async (request, response) => {
 		response.render('view-page', { page })
 	}
 	catch (err) {
-		request.flash('error','couldnt fetch page')
+		request.flash('error', 'couldnt fetch page')
 	}
 }
 
 const viewAnalytics = async (request, response) => {
 	try {
-		const courses = await Course.findAll({ where: { userId: request.user.id }})
+		const courses = await Course.findAll({ where: { userId: request.user.id } })
 		for (const enroll of courses) {
-			const currCount = await Enrollment.count({where: {courseId: enroll.id}})
+			const currCount = await Enrollment.count({ where: { courseId: enroll.id } })
 			enroll.registrations = currCount
 		}
 
 		response.render('educator-analytics', { courses })
 	}
 	catch (err) {
-		request.flash('error','couldnt fetch analytics')
+		request.flash('error', 'couldnt fetch analytics')
 		console.log(err)
 	}
 }
