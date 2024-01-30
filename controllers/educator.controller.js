@@ -1,4 +1,5 @@
 const { Course, Chapter, Module, Page, Enrollment } = require('../models')
+const marked = require('marked')
 
 
 
@@ -15,7 +16,7 @@ const requestChapterCreation = async (request, response) => {
 
 		const chapters = await Chapter.findAll({ where: { courseId: request.params.id } })
 		const chapter = await Chapter.findOne({ where: { courseId: request.params.id } })
-		response.render('create-chapter', { sendId, chapters, chapter  })
+		response.render('create-chapter', { sendId, chapters, chapter })
 	}
 	catch (err) {
 		request.flash('error', 'there was some problem in retrieving chapters')
@@ -33,7 +34,7 @@ const requestModuleCreation = async (request, response) => {
 			where: { chapterId: request.params.id }
 		})
 
-		const module =  await Module.findOne({
+		const module = await Module.findOne({
 			where: { chapterId: request.params.id }
 		})
 		response.render('create-module', { sendId, modules, module })
@@ -175,9 +176,32 @@ const servePageConfirmation = async (request, response) => {
 
 const viewCourse = async (request, response) => {
 	try {
-		const chapterList = await Chapter.findAll({ where: { courseId: request.params.id } })
-		const courseInfo = await Course.findOne({ where: { id: request.params.id } })
-		response.render('course-overview', { chapterList, courseInfo })
+		let courseInfo = await Course.findOne({
+			where: { id: request.params.id },
+			include: [
+				{
+					model: Chapter,
+					include: [
+						{
+							model: Module,
+							include: [
+								{
+									model: Page,
+								},
+							],
+						},
+					],
+				},
+			],
+			order: [
+				[Chapter, 'chapterNo', 'ASC'], // Order chapters by chapterNo in ascending order
+				[Chapter, Module, 'moduleNo', 'ASC'], // Order modules by moduleNo in ascending order
+				[Chapter, Module, Page, 'pageNo', 'ASC'], // Order pages by pageNo in ascending order
+			],
+		})
+
+		courseInfo = courseInfo.get()
+		response.render('course-overview', { courseInfo })
 
 	}
 	catch (err) {
@@ -187,11 +211,22 @@ const viewCourse = async (request, response) => {
 
 const viewPage = async (request, response) => {
 	try {
+
 		const page = await Page.findOne({ where: { id: request.params.id } })
-		response.render('view-page', { page })
+		page.content = marked.parse(page.content)
+		const mod = await Module.findOne({ where: { id: page.moduleId } })
+		const chapter = await Chapter.findOne({ where: { id: mod.chapterId } })
+		const course = await Course.findOne({ where: { id: chapter.courseId } })
+		response.render('view-page', {
+			page,
+			chapter,
+			course,
+		})
 	}
 	catch (err) {
-		request.flash('error', 'couldnt fetch page')
+		request.flash('error', 'Could not fetch Page')
+		console.log(err)
+		response.redirect('/')
 	}
 }
 

@@ -16,6 +16,32 @@
 
         </div>
 
+        <table class="container w-full mx-auto bg-white">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 bg-gray-200">Page No</th>
+                    <th class="py-2 px-4 bg-gray-200">Page Name</th>
+                    <th class="py-2 px-4 bg-gray-200"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (var page of pages) { %>
+                    <tr>
+                        <td class="py-2 px-4 border">
+                            <%= page.pageNo %>
+                        </td>
+                        <td class="py-2 px-4 border">
+                            <%= page.title %>
+                        </td>
+
+                        <td class="py-2 px-4 border">
+                            <a class="underline" href="/view-page/<%= page.id %>">View Page</a>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+
         <div class="container mx-auto mt-8 p-4 bg-white rounded-md shadow-md">
             <h2 class="text-3xl font-bold mb-6 text-center">Create New Page</h2>
             <form action="/add-page" method="POST">
@@ -67,31 +93,7 @@
                 </div>
             </form>
 
-            <table class="w-full">
-                <thead>
-                    <tr>
-                        <th class="py-2 px-4 bg-gray-200">Page No</th>
-                        <th class="py-2 px-4 bg-gray-200">Page Name</th>
-                        <th class="py-2 px-4 bg-gray-200"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for (var page of pages) { %>
-                        <tr>
-                            <td class="py-2 px-4 border">
-                                <%= page.pageNo %>
-                            </td>
-                            <td class="py-2 px-4 border">
-                                <%= page.title %>
-                            </td>
-
-                            <td class="py-2 px-4 border">
-                                <a class="underline" href="/view-page/<%= page.id %>">View Page</a>
-                            </td>
-                        </tr>
-                        <% } %>
-                </tbody>
-            </table>
+            
         </div>
 
 </body>
