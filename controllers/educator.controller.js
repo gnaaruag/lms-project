@@ -1,6 +1,6 @@
-const { Course, Chapter, Module, Page, Enrollment } = require('../models')
+const { Course, Chapter, Module, Page, Enrollment, Rating } = require('../models')
 const marked = require('marked')
-
+const sequelize = require('sequelize')
 
 
 const requestCourseCreation = (request, response) => {
@@ -233,9 +233,17 @@ const viewPage = async (request, response) => {
 const viewAnalytics = async (request, response) => {
 	try {
 		const courses = await Course.findAll({ where: { userId: request.user.id } })
+
 		for (const enroll of courses) {
 			const currCount = await Enrollment.count({ where: { courseId: enroll.id } })
 			enroll.registrations = currCount
+			const avgRating = await Rating.findOne({
+				attributes: [
+					[sequelize.fn('AVG', sequelize.col('stars')), 'averageRating']
+				],
+				where: { courseId: enroll.id }
+			})
+			enroll.averageRating = avgRating ? avgRating.dataValues.averageRating : null
 		}
 
 		response.render('educator-analytics', { courses })

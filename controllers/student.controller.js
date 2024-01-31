@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 const { response } = require('express')
-const { User, Course, Chapter, Enrollment, Module, Page, status } = require('../models')
+const { User, Course, Chapter, Enrollment, Module, Page, status, Rating } = require('../models')
 const Sequelize = require('sequelize')
 const marked = require('marked')
 const fs = require('fs')
@@ -31,7 +31,12 @@ const studentCourseOverview = async (request, response) => {
 		const course = await Course.findOne({ where: { id: request.params.id } })
 		const instructor = await User.findOne({ where: { id: course.userId } })
 		const chapters = await Chapter.findAll({ where: { courseId: course.id } })
-		response.render('student-course-overview', { course, instructor, chapters })
+		const rating = await Rating.findAll({where: {courseId: request.params.id}})
+		for (const rate of rating) {
+			const username = await User.findOne({where: {id: rate.userId}})
+			rate.username = username.firstName + ' ' + username.lastName
+		}
+		response.render('student-course-overview', { course, instructor, chapters, rating })
 	}
 
 	catch (err) {
@@ -80,6 +85,7 @@ const courseEntryPoint = async (request, response) => {
 		const course = await Course.findOne({ where: { id: request.params.id } })
 		const instructor = await User.findOne({ where: { id: course.userId } })
 		const chapters = await Chapter.findAll({ where: { courseId: course.id } })
+		const rating = await Rating.findOne({where: {userId: request.user.id, courseId: request.params.id}})
 
 		let totalPages = 0
 		let completedPages = 0
@@ -106,7 +112,7 @@ const courseEntryPoint = async (request, response) => {
 
 		const completionPercentage = (completedPages / totalPages) * 100
 
-		response.render('student-course-entry-point', { course, chapters, instructor, completionPercentage })
+		response.render('student-course-entry-point', { course, chapters, instructor, completionPercentage, rating })
 	}
 	catch (err) {
 		request.flash('error', 'Could not fetch course')
@@ -250,7 +256,39 @@ const certGen = async (request, response) => {
 	}
 }
 
+const addRating = async (request, response) => {
+	try {
 
+		const checkExists = await Rating.findOne({where: {userId: request.user.id, courseId: request.body.courseId}})
+		if (checkExists) {
+			await Rating.update(
+				{
+					stars: request.body.rating,
+					review: request.body.review
+				},
+				{
+					where: { userId: request.user.id, courseId: request.body.courseId }
+				}
+			)
+			request.flash('success', 'Your Feedback has been sent to the Course Instructor')
+			response.redirect('/course-outline/'+ request.body.courseId)
+		}
+		else {
+			const rating = await Rating.create({
+				stars: request.body.rating,
+				userId: request.user.id,
+				review: request.body.review,
+				courseId: request.body.courseId
+			})
+	
+			response.redirect('/course-outline/'+ request.body.courseId)
+		}
+	}
+	catch (err) {
+		console.log(err)
+		request.flash('error', 'could not update rating')
+	}
+}
 
 
 
@@ -262,5 +300,6 @@ module.exports = {
 	chapterOverview,
 	pageView,
 	updateStatus,
-	certGen
+	certGen,
+	addRating
 }
