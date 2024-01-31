@@ -71,34 +71,19 @@
 
         <script>
             const minDate = new Date()
-            document.getElementById("endDate").setAttribute("min", minDate.toISOString().slice(0, 10));
-            document.getElementById("startDate").setAttribute("min", minDate.toISOString().slice(0, 10));
-            document.getElementById("enrollmentDeadline").setAttribute("min", minDate.toISOString().slice(0, 10));
-    
-            document.getElementById("startDate").addEventListener("change", function () {
-                const startDate = new Date(this.value);
-                const enrollmentDeadline = new Date(document.getElementById("enrollmentDeadline").value);
-    
-                if (startDate > enrollmentDeadline) {
-                    alert("Start date cannot be later than enrollment deadline.");
-                    this.value = minDate.toISOString().slice(0, 10);
-                }
-    
-                document.getElementById("endDate").setAttribute("min", this.value);
-            });
-    
-            document.getElementById("enrollmentDeadline").addEventListener("change", function () {
-                const enrollmentDeadline = new Date(this.value);
-                const startDate = new Date(document.getElementById("startDate").value);
-    
-                if (enrollmentDeadline > startDate) {
-                    alert("Enrollment deadline cannot be later than start date.");
-                    this.value = minDate.toISOString().slice(0, 10);
-                }
-    
-                document.getElementById("startDate").setAttribute("max", this.value);
-            });
+            document
+                .getElementById("endDate")
+                .setAttribute("min", minDate.toISOString().slice(0, 10));
+
+                document
+                .getElementById("startDate")
+                .setAttribute("min", minDate.toISOString().slice(0, 10));
+
+                document
+                .getElementById("enrollmentDeadline")
+                .setAttribute("min", minDate.toISOString().slice(0, 10));
         </script>
+
 </body>
 
 </html>
