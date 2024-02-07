@@ -1,6 +1,6 @@
 # lms-project
 
-This is the first iteration of the Learning Management System project made as a submission for the capstone project for Pupilfirst's WD201 course
+This is a Learning Management System project made as a submission for the capstone project for Pupilfirst's WD201 course
 
 Students can register for courses, and learn and complete courses.
 
@@ -64,7 +64,6 @@ Password hashing for security.
 
 #### Course Management:
 Creation of courses by educators.
-Assignment of educators to their respective courses.
 Display of course details, including name, duration, and description.
 
 #### Chapter and Module Creation:
@@ -83,10 +82,6 @@ Tracking of course enrollment status.
 Display of relevant information upon user login.
 Overview of enrolled courses for students.
 Overview of created courses for educators.
-
-#### Educator Onboarding:
-Special registration process for educators.
-Setup for educator profiles.
 
 #### Middleware for Access Control:
 Implementation of middleware to check user access levels.
@@ -157,10 +152,16 @@ An open-source relational database management system used to store application d
 - A library for HTTP assertions and testing HTTP servers.
 
 ## Application Screenshots
-![image](https://github.com/gnaaruag/lms-project/assets/68043860/05febeab-8719-4ba4-83fe-0301f2934884)
-![image](https://github.com/gnaaruag/lms-project/assets/68043860/06e79432-4ce5-48f1-9895-f7997076cfc2)
-![image](https://github.com/gnaaruag/lms-project/assets/68043860/7d0b953c-0cf9-4ed0-b6d7-f06f84c5e803)
-![image](https://github.com/gnaaruag/lms-project/assets/68043860/ff284de8-55db-4003-ada6-780d34e03386)
-![image](https://github.com/gnaaruag/lms-project/assets/68043860/d448ac1c-d446-4962-a617-8fa78a2e62d5)
+![Landing Page](https://github.com/gnaaruag/lms-project/assets/68043860/4b281ed0-d46f-4a13-a62b-76188a830583)
+![Student Dashboard](https://github.com/gnaaruag/lms-project/assets/68043860/dd6b5078-4ec8-4427-ab83-37a56c3058c4)
+![image](https://github.com/gnaaruag/lms-project/assets/68043860/cb5a6f92-b932-4eef-8511-6f94db1256f8)
+![image](https://github.com/gnaaruag/lms-project/assets/68043860/0051a823-3ce8-47c6-a151-7b422b906710)
+![image](https://github.com/gnaaruag/lms-project/assets/68043860/a5eb9a8e-0188-41cc-843b-2da027d7d411)
+![image](https://github.com/gnaaruag/lms-project/assets/68043860/2a3fe8cb-6d61-4bf0-925d-cdf064461c8c)
+![image](https://github.com/gnaaruag/lms-project/assets/68043860/6ea754b2-175b-4901-9ceb-1b6844337bfc)
+
+
+
+
 
 
