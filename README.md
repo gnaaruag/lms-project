@@ -1,6 +1,6 @@
 # lms-project
 
-This is a Learning Management System project made as a submission for the capstone project for Pupilfirst's WD201 course
+This is a Learning Management System project
 
 Students can register for courses, and learn and complete courses.
 
